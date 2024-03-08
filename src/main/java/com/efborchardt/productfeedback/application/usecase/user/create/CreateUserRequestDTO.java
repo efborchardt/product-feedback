@@ -1,10 +1,14 @@
 package com.efborchardt.productfeedback.application.usecase.user.create;
 
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
+
 public class CreateUserRequestDTO {
 
     private String username;
     private String password;
     private String email;
+
+    private UserRole role;
 
     public String getUsername() {
         return username;
@@ -28,5 +32,13 @@ public class CreateUserRequestDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

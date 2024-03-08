@@ -64,7 +64,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                     product.getCreatedBy().getId(),
                     product.getCreatedBy().getUsername(),
                     product.getCreatedBy().getEmail(),
-                    product.getCreatedBy().getPassword()
+                    product.getCreatedBy().getPassword(),
+                    product.getCreatedBy().getRole()
                 )
         );
     }
@@ -78,7 +79,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                     productEntity.getCreatedBy().getId(),
                     productEntity.getCreatedBy().getUsername(),
                     productEntity.getCreatedBy().getEmail(),
-                    productEntity.getCreatedBy().getPassword()
+                    productEntity.getCreatedBy().getPassword(),
+                    productEntity.getCreatedBy().getRole()
                 )
         );
     }

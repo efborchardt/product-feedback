@@ -22,7 +22,7 @@ public class UserService {
     public User createNewUser(User user) {
         final boolean userNameAlreadyBeingUsed = this.repository.findByUsername(user.getUsername()).isPresent();
         if (userNameAlreadyBeingUsed) {
-            throw new RuntimeException("Username is already being used");
+            throw new RuntimeException("Username already exists");
         }
 
         this.repository.save(user);

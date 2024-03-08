@@ -6,6 +6,7 @@ import com.efborchardt.productfeedback.infrastructure.persistence.user.model.Spr
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -51,7 +52,8 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getRole()
         );
     }
 
@@ -59,7 +61,8 @@ public class UserRepositoryImpl implements UserRepository {
         return new User(userEntity.getId(),
                 userEntity.getUsername(),
                 userEntity.getEmail(),
-                userEntity.getPassword()
+                userEntity.getPassword(),
+                userEntity.getRole()
         );
     }
 

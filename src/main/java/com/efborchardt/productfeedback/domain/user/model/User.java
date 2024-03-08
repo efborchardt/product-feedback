@@ -13,7 +13,10 @@ public class User {
     private String email;
     private String password;
 
-    public User(String username, String email, String password) {
+    private final UserRole role;
+
+    public User(String username, String email, String password, UserRole role) {
+        this.role = role;
         this.id = UUID.randomUUID();
         this.username = username;
         this.email = email;
@@ -21,11 +24,12 @@ public class User {
         validate();
     }
 
-    public User(UUID id, String username, String email, String password) {
+    public User(UUID id, String username, String email, String password, UserRole role) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
         validate();
     }
 
@@ -58,6 +62,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public UserRole getRole() {
+        return role;
     }
 
     private void validate() {

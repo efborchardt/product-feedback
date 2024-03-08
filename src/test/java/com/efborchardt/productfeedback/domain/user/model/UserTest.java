@@ -26,13 +26,13 @@ class UserTest {
 
     @Test
     void userIsValid() {
-        new User("testUser", "test@example.com", "password");
+        new User("testUser", "test@example.com", "password", UserRole.USER);
         verify(mockNotification, never()).addError(anyString(), anyString());
     }
 
     @Test
     void userIsInvalid() {
-        new User(null, "", "", "");
+        new User(null, "", "", "", UserRole.USER);
         verify(mockNotification).addError("ID is required", "User");
         verify(mockNotification).addError("Username is required", "User");
         verify(mockNotification).addError("email is required", "User");
@@ -41,7 +41,7 @@ class UserTest {
 
     @Test
     void changePasswordValidatesNewPassword() {
-        User user = new User("testUser", "test@example.com", "oldPassword");
+        User user = new User("testUser", "test@example.com", "oldPassword", UserRole.USER);
         user.changePassword("");
         verify(mockNotification).addError("Password is required", "User");
     }

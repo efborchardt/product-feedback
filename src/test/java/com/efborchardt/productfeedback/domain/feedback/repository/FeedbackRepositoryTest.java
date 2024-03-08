@@ -3,6 +3,7 @@ package com.efborchardt.productfeedback.domain.feedback.repository;
 import com.efborchardt.productfeedback.domain.feedback.model.Feedback;
 import com.efborchardt.productfeedback.domain.product.model.Product;
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.infrastructure.persistence.feedback.model.FeedbackEntity;
 import com.efborchardt.productfeedback.infrastructure.persistence.feedback.repository.FeedbackRepositoryImpl;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
@@ -42,7 +43,8 @@ class FeedbackRepositoryTest {
             UUID.randomUUID(),
             "testUser",
             "test@example.com",
-                "testPassword"
+            "testPassword",
+                UserRole.ADMIN
         );
 
         entityManager.persist(userEntity);
@@ -50,7 +52,8 @@ class FeedbackRepositoryTest {
                 userEntity.getId(),
                 userEntity.getUsername(),
                 userEntity.getEmail(),
-                userEntity.getPassword()
+                userEntity.getPassword(),
+                userEntity.getRole()
         );
 
         ProductEntity productEntity = new ProductEntity(

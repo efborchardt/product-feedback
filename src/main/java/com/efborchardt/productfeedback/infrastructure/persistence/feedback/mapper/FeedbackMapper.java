@@ -23,7 +23,8 @@ public class FeedbackMapper {
                         feedback.getSubmittedBy().getId(),
                         feedback.getSubmittedBy().getUsername(),
                         feedback.getSubmittedBy().getEmail(),
-                        feedback.getSubmittedBy().getPassword()
+                        feedback.getSubmittedBy().getPassword(),
+                        feedback.getSubmittedBy().getRole()
                 ),
                 new ProductEntity(
                         feedback.getProduct().getId(),
@@ -34,7 +35,8 @@ public class FeedbackMapper {
                                 feedback.getProduct().getCreatedBy().getId(),
                                 feedback.getProduct().getCreatedBy().getUsername(),
                                 feedback.getProduct().getCreatedBy().getEmail(),
-                                feedback.getProduct().getCreatedBy().getPassword()
+                                feedback.getProduct().getCreatedBy().getPassword(),
+                                feedback.getProduct().getCreatedBy().getRole()
                         )
                 )
         );
@@ -49,7 +51,8 @@ public class FeedbackMapper {
                         feedbackEntity.getSubmittedBy().getId(),
                         feedbackEntity.getSubmittedBy().getUsername(),
                         feedbackEntity.getSubmittedBy().getEmail(),
-                        feedbackEntity.getSubmittedBy().getPassword()
+                        feedbackEntity.getSubmittedBy().getPassword(),
+                        feedbackEntity.getSubmittedBy().getRole()
                 ),
                 new Product(
                         feedbackEntity.getProduct().getId(),
@@ -60,7 +63,8 @@ public class FeedbackMapper {
                                 feedbackEntity.getProduct().getCreatedBy().getId(),
                                 feedbackEntity.getProduct().getCreatedBy().getUsername(),
                                 feedbackEntity.getProduct().getCreatedBy().getEmail(),
-                                feedbackEntity.getProduct().getCreatedBy().getPassword()
+                                feedbackEntity.getProduct().getCreatedBy().getPassword(),
+                                feedbackEntity.getProduct().getCreatedBy().getRole()
                         )
                 )
         );

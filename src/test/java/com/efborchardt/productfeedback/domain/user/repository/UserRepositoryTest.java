@@ -1,6 +1,7 @@
 package com.efborchardt.productfeedback.domain.user.repository;
 
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.repository.UserRepositoryImpl;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class UserRepositoryTest {
 
     @Test
     void save() {
-        User newUser = new User("testUsername", "testEmail@example.com", "testPassword");
+        User newUser = new User("testUsername", "testEmail@example.com", "testPassword", UserRole.USER);
         userRepository.save(newUser);
         UserEntity foundEntity = entityManager.find(UserEntity.class, newUser.getId());
         assertThat(foundEntity).isNotNull();
@@ -39,7 +40,7 @@ class UserRepositoryTest {
 
     @Test
     void findById() {
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "findUsername", "findEmail@example.com", "findPassword");
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "findUsername", "findEmail@example.com", "findPassword", UserRole.USER);
         entityManager.persistAndFlush(userEntity);
 
         Optional<User> foundUser = userRepository.findById(userEntity.getId());

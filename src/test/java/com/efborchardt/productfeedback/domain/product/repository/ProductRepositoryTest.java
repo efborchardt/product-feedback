@@ -2,6 +2,7 @@ package com.efborchardt.productfeedback.domain.product.repository;
 
 import com.efborchardt.productfeedback.domain.product.model.Product;
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.infrastructure.persistence.product.repository.ProductRepositoryImpl;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
 import org.junit.jupiter.api.Test;
@@ -30,14 +31,15 @@ class ProductRepositoryTest {
 
     @Test
     public void testSave() {
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "test", "test@test.com", "123pass");
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "test", "test@test.com", "123pass", UserRole.USER);
         this.entityManager.persist(userEntity);
 
         User user = new User(
                 userEntity.getId(),
                 userEntity.getUsername(),
                 userEntity.getEmail(),
-                userEntity.getPassword()
+                userEntity.getPassword(),
+                userEntity.getRole()
         );
 
         UUID productId = UUID.randomUUID();

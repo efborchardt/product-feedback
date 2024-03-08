@@ -1,8 +1,10 @@
 package com.efborchardt.productfeedback.application.usecase.user.create;
 
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,10 +18,12 @@ public class CreateUserUseCase {
     }
 
     public CreateUserResponseDTO execute(CreateUserRequestDTO request) {
+        final String encryptedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
         final User user = new User(
                 request.getUsername(),
                 request.getEmail(),
-                request.getPassword()
+                encryptedPassword,
+                request.getRole()
         );
 
         final User createdUser = this.service.createNewUser(user);
