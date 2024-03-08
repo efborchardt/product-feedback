@@ -3,6 +3,7 @@ package com.efborchardt.productfeedback.infrastructure.interfaces.rest.routes.pr
 import com.efborchardt.productfeedback.application.usecase.product.create.CreateProductRequestDTO;
 import com.efborchardt.productfeedback.application.usecase.product.create.CreateProductResponseDTO;
 import com.efborchardt.productfeedback.application.usecase.product.create.CreateProductUseCase;
+import com.efborchardt.productfeedback.application.usecase.product.delete.DeleteProductRequestDTO;
 import com.efborchardt.productfeedback.application.usecase.product.delete.DeleteProductResponseDTO;
 import com.efborchardt.productfeedback.application.usecase.product.delete.DeleteProductUseCase;
 import com.efborchardt.productfeedback.application.usecase.product.find.FindProductResponseDTO;
@@ -13,7 +14,9 @@ import com.efborchardt.productfeedback.application.usecase.product.list.ProductR
 import com.efborchardt.productfeedback.application.usecase.product.update.UpdateProductRequestDTO;
 import com.efborchardt.productfeedback.application.usecase.product.update.UpdateProductResponseDTO;
 import com.efborchardt.productfeedback.application.usecase.product.update.UpdateProductUseCase;
+import com.efborchardt.productfeedback.infrastructure.interfaces.rest.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,17 +33,19 @@ public class ProductController {
     private final DeleteProductUseCase deleteProductUseCase;
     private final UpdateProductUseCase updateProductUseCase;
     private final FindProductUseCase findProductUseCase;
+    private final TokenService tokenService;
 
     @Autowired
     public ProductController(CreateProductUseCase createProductUseCase,
                              ListProductsUseCase listProductsUseCase,
                              DeleteProductUseCase deleteProductUseCase,
-                             UpdateProductUseCase updateProductUseCase, FindProductUseCase findProductUseCase) {
+                             UpdateProductUseCase updateProductUseCase, FindProductUseCase findProductUseCase, TokenService tokenService) {
         this.createProductUseCase = createProductUseCase;
         this.listProductsUseCase = listProductsUseCase;
         this.deleteProductUseCase = deleteProductUseCase;
         this.updateProductUseCase = updateProductUseCase;
         this.findProductUseCase = findProductUseCase;
+        this.tokenService = tokenService;
     }
 
     @PostMapping
@@ -64,14 +69,19 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<UpdateProductResponseDTO> updateProduct(@RequestBody UpdateProductRequestDTO request) {
-        final UpdateProductResponseDTO response = this.updateProductUseCase.execute(request);
+    public ResponseEntity<UpdateProductResponseDTO> updateProduct(@RequestBody UpdateProductRequestDTO request,
+                                                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        final String senderUsername = this.tokenService.validateToken(token);
+        final UpdateProductResponseDTO response = this.updateProductUseCase.execute(request, senderUsername);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteProductResponseDTO> deleteProduct(@PathVariable UUID id) {
-        final DeleteProductResponseDTO response = this.deleteProductUseCase.execute(id);
+    public ResponseEntity<DeleteProductResponseDTO> deleteProduct(@PathVariable UUID id,
+                                                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        final String senderUsername = this.tokenService.validateToken(token);
+        final DeleteProductRequestDTO request = new DeleteProductRequestDTO(id, senderUsername);
+        final DeleteProductResponseDTO response = this.deleteProductUseCase.execute(request);
         return ResponseEntity.ok(response);
     }
 

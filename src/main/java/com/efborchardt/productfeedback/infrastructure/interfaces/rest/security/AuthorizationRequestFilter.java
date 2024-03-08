@@ -16,34 +16,28 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class AuthorizationRequestFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final SpringDataUserRepository userRepository;
 
     @Autowired
-    public JwtRequestFilter(TokenService tokenService, SpringDataUserRepository userRepository) {
+    public AuthorizationRequestFilter(TokenService tokenService, SpringDataUserRepository userRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = this.recoverToken(request);
+        final String token = request.getHeader("Authorization");
         if(token != null){
-            var login = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByUsername(login)
+            final String username = tokenService.validateToken(token);
+            UserDetails user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UserNotFoundException("User not found"));
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
-    }
-
-    private String recoverToken(HttpServletRequest request){
-        var authHeader = request.getHeader("Authorization");
-        if(authHeader == null) return null;
-        return authHeader.replace("Bearer ", "");
     }
 }

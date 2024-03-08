@@ -38,7 +38,7 @@ public class JwtTokenService implements TokenService {
             return JWT.require(algorithm)
                     .withIssuer("product-feedback-api")
                     .build()
-                    .verify(token)
+                    .verify(token.replace("Bearer ", ""))
                     .getSubject();
         } catch (JWTVerificationException exception){
             return "";

@@ -41,6 +41,11 @@ public class UserService {
 
     public User findById(UUID id) {
         return this.repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Unable to find a user with ID " + id.toString()));
+                .orElseThrow(() -> new UserNotFoundException("Unable to find a user with ID: " + id.toString()));
+    }
+
+    public User findByUsername(String username) {
+        return this.repository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("Unable to find a user with Username: " + username));
     }
 }

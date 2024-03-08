@@ -1,5 +1,6 @@
 package com.efborchardt.productfeedback.infrastructure.interfaces.rest.errors;
 
+import com.efborchardt.productfeedback.domain._shared.exception.UnauthorizedActionException;
 import com.efborchardt.productfeedback.domain.feedback.exception.FeedbackNotFoundException;
 import com.efborchardt.productfeedback.domain.product.exception.ProductNotFoundException;
 import com.efborchardt.productfeedback.domain.user.exception.UserNotFoundException;
@@ -46,5 +47,11 @@ public class ApiExceptionHandler {
     public ResponseEntity<Object> handleFeedbackNotFoundException(FeedbackNotFoundException ex) {
         ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), "Feedback not found");
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnauthorizedActionException.class)
+    public ResponseEntity<Object> handleUnauthorizedActionException(UnauthorizedActionException ex) {
+        ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), "Unauthorized");
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 }

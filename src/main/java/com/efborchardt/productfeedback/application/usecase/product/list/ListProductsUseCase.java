@@ -1,6 +1,5 @@
 package com.efborchardt.productfeedback.application.usecase.product.list;
 
-import com.efborchardt.productfeedback.application.usecase.common.DefaultUseCase;
 import com.efborchardt.productfeedback.domain.product.model.Product;
 import com.efborchardt.productfeedback.domain.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ListProductsUseCase implements DefaultUseCase<ListProductFilterCriteriaDTO, ProductResponseListDTO> {
+public class ListProductsUseCase {
 
     private final ProductService service;
 
@@ -19,7 +18,6 @@ public class ListProductsUseCase implements DefaultUseCase<ListProductFilterCrit
         this.service = service;
     }
 
-    @Override
     public ProductResponseListDTO execute(ListProductFilterCriteriaDTO criteria) {
         List<Product> productList = this.service.listProducts(criteria);
         return mapProductListToDto(productList);

@@ -1,6 +1,5 @@
 package com.efborchardt.productfeedback.application.usecase.product.create;
 
-import com.efborchardt.productfeedback.application.usecase.common.DefaultUseCase;
 import com.efborchardt.productfeedback.domain.product.model.Product;
 import com.efborchardt.productfeedback.domain.product.service.ProductService;
 import com.efborchardt.productfeedback.domain.user.model.User;
@@ -9,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateProductUseCase implements DefaultUseCase<CreateProductRequestDTO, CreateProductResponseDTO> {
+public class CreateProductUseCase {
 
     private final ProductService productService;
     private final UserService userService;
@@ -20,7 +19,6 @@ public class CreateProductUseCase implements DefaultUseCase<CreateProductRequest
         this.userService = userService;
     }
 
-    @Override
     public CreateProductResponseDTO execute(CreateProductRequestDTO request) {
         final User user = this.userService.findById(request.getUserId());
         final Product product = new Product(
