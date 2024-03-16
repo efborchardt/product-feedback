@@ -5,23 +5,21 @@ import com.efborchardt.productfeedback.domain.product.service.ProductService;
 import com.efborchardt.productfeedback.domain.user.model.User;
 import com.efborchardt.productfeedback.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UpdateProductUseCase {
 
     private final ProductService productService;
-    private final UserService userService;
 
     @Autowired
-    public UpdateProductUseCase(ProductService productService, UserService userService) {
+    public UpdateProductUseCase(ProductService productService) {
         this.productService = productService;
-        this.userService = userService;
     }
 
-    public UpdateProductResponseDTO execute(UpdateProductRequestDTO request, String senderUsername) {
-        final User sender = this.userService.findByUsername(senderUsername);
-        final Product updatedProduct = this.productService.updateProduct(request, sender);
+    public UpdateProductResponseDTO execute(UpdateProductRequestDTO request, UserDetails sender) {
+        final Product updatedProduct = this.productService.updateProduct(request, (User) sender);
         return new UpdateProductResponseDTO(
                 updatedProduct.getId(),
                 updatedProduct.getName(),

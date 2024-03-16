@@ -3,6 +3,7 @@ package com.efborchardt.productfeedback.infrastructure.persistence.product.repos
 import com.efborchardt.productfeedback.domain.product.model.Product;
 import com.efborchardt.productfeedback.domain.product.repository.ProductRepository;
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.infrastructure.persistence.product.model.ProductEntity;
 import com.efborchardt.productfeedback.infrastructure.persistence.product.model.SpringDataProductRepository;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
@@ -65,7 +66,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                     product.getCreatedBy().getUsername(),
                     product.getCreatedBy().getEmail(),
                     product.getCreatedBy().getPassword(),
-                    product.getCreatedBy().getRole()
+                    product.getCreatedBy().getRole().asString()
                 )
         );
     }
@@ -80,7 +81,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                     productEntity.getCreatedBy().getUsername(),
                     productEntity.getCreatedBy().getEmail(),
                     productEntity.getCreatedBy().getPassword(),
-                    productEntity.getCreatedBy().getRole()
+                    UserRole.fromString(productEntity.getCreatedBy().getRole())
                 )
         );
     }

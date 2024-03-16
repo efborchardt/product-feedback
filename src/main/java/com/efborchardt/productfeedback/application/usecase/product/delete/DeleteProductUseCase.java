@@ -4,24 +4,23 @@ import com.efborchardt.productfeedback.domain.product.service.ProductService;
 import com.efborchardt.productfeedback.domain.user.model.User;
 import com.efborchardt.productfeedback.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class DeleteProductUseCase {
 
     private final ProductService productService;
-    private final UserService userService;
 
     @Autowired
-    public DeleteProductUseCase(ProductService productService, UserService userService) {
+    public DeleteProductUseCase(ProductService productService) {
         this.productService = productService;
-        this.userService = userService;
     }
 
-    public DeleteProductResponseDTO execute(DeleteProductRequestDTO request) {
-        final User sender = this.userService.findByUsername(request.getSenderUsername());
-
-        this.productService.deleteProduct(request.getProductId(), sender);
+    public DeleteProductResponseDTO execute(UUID productId, UserDetails sender) {
+        this.productService.deleteProduct(productId, (User) sender);
         return new DeleteProductResponseDTO();
     }
 }

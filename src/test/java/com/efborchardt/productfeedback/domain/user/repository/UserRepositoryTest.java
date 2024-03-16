@@ -40,7 +40,7 @@ class UserRepositoryTest {
 
     @Test
     void findById() {
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "findUsername", "findEmail@example.com", "findPassword", UserRole.USER);
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "findUsername", "findEmail@example.com", "findPassword", UserRole.USER.asString());
         entityManager.persistAndFlush(userEntity);
 
         Optional<User> foundUser = userRepository.findById(userEntity.getId());

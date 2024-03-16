@@ -1,5 +1,6 @@
 package com.efborchardt.productfeedback.infrastructure.interfaces.rest.routes.auth;
 
+import com.efborchardt.productfeedback.domain.user.model.User;
 import com.efborchardt.productfeedback.infrastructure.interfaces.rest.security.TokenService;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
 import jakarta.validation.Valid;
@@ -34,7 +35,7 @@ public class AuthController {
                 authenticationRequest.password()
         );
         final Authentication auth = this.authenticationManager.authenticate(usernamePassword);
-        final String token = this.tokenService.generateToken((UserEntity) auth.getPrincipal());
+        final String token = this.tokenService.generateToken((User) auth.getPrincipal());
 
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }

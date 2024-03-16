@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class UserEntity implements UserDetails {
+public class UserEntity {
 
     @Id
     private UUID id;
@@ -22,12 +22,12 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
 
-    private UserRole role;
+    private String role;
 
     public UserEntity() {
     }
 
-    public UserEntity(UUID id, String username, String email, String password, UserRole role) {
+    public UserEntity(UUID id, String username, String email, String password, String role) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -35,13 +35,6 @@ public class UserEntity implements UserDetails {
         this.role = role;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
@@ -74,31 +67,11 @@ public class UserEntity implements UserDetails {
         this.password = password;
     }
 
-    public UserRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(String role) {
         this.role = role;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

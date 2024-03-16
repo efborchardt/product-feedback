@@ -1,6 +1,7 @@
 package com.efborchardt.productfeedback.infrastructure.persistence.user.repository;
 
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.domain.user.repository.UserRepository;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.SpringDataUserRepository;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
@@ -53,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getRole()
+                user.getRole().asString()
         );
     }
 
@@ -62,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
                 userEntity.getUsername(),
                 userEntity.getEmail(),
                 userEntity.getPassword(),
-                userEntity.getRole()
+                UserRole.fromString(userEntity.getRole())
         );
     }
 

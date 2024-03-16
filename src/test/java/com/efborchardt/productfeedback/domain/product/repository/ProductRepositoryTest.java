@@ -31,7 +31,7 @@ class ProductRepositoryTest {
 
     @Test
     public void testSave() {
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "test", "test@test.com", "123pass", UserRole.USER);
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "test", "test@test.com", "123pass", UserRole.USER.asString());
         this.entityManager.persist(userEntity);
 
         User user = new User(
@@ -39,7 +39,7 @@ class ProductRepositoryTest {
                 userEntity.getUsername(),
                 userEntity.getEmail(),
                 userEntity.getPassword(),
-                userEntity.getRole()
+                UserRole.fromString(userEntity.getRole())
         );
 
         UUID productId = UUID.randomUUID();

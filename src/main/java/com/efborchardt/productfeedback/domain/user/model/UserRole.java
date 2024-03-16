@@ -10,7 +10,16 @@ public enum UserRole {
         this.role = role;
     }
 
-    String getRole() {
+    public String asString() {
         return this.role;
+    }
+
+    public static UserRole fromString(String text) {
+        for (UserRole role : UserRole.values()) {
+            if (role.role.equalsIgnoreCase(text)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("No constant with text " + text + " found");
     }
 }

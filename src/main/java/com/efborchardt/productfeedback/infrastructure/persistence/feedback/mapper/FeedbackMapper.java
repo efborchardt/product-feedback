@@ -3,6 +3,7 @@ package com.efborchardt.productfeedback.infrastructure.persistence.feedback.mapp
 import com.efborchardt.productfeedback.domain.feedback.model.Feedback;
 import com.efborchardt.productfeedback.domain.product.model.Product;
 import com.efborchardt.productfeedback.domain.user.model.User;
+import com.efborchardt.productfeedback.domain.user.model.UserRole;
 import com.efborchardt.productfeedback.infrastructure.persistence.feedback.model.FeedbackEntity;
 import com.efborchardt.productfeedback.infrastructure.persistence.product.model.ProductEntity;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.UserEntity;
@@ -24,7 +25,7 @@ public class FeedbackMapper {
                         feedback.getSubmittedBy().getUsername(),
                         feedback.getSubmittedBy().getEmail(),
                         feedback.getSubmittedBy().getPassword(),
-                        feedback.getSubmittedBy().getRole()
+                        feedback.getSubmittedBy().getRole().asString()
                 ),
                 new ProductEntity(
                         feedback.getProduct().getId(),
@@ -36,7 +37,7 @@ public class FeedbackMapper {
                                 feedback.getProduct().getCreatedBy().getUsername(),
                                 feedback.getProduct().getCreatedBy().getEmail(),
                                 feedback.getProduct().getCreatedBy().getPassword(),
-                                feedback.getProduct().getCreatedBy().getRole()
+                                feedback.getProduct().getCreatedBy().getRole().asString()
                         )
                 )
         );
@@ -52,7 +53,7 @@ public class FeedbackMapper {
                         feedbackEntity.getSubmittedBy().getUsername(),
                         feedbackEntity.getSubmittedBy().getEmail(),
                         feedbackEntity.getSubmittedBy().getPassword(),
-                        feedbackEntity.getSubmittedBy().getRole()
+                        UserRole.fromString(feedbackEntity.getSubmittedBy().getRole())
                 ),
                 new Product(
                         feedbackEntity.getProduct().getId(),
@@ -64,7 +65,7 @@ public class FeedbackMapper {
                                 feedbackEntity.getProduct().getCreatedBy().getUsername(),
                                 feedbackEntity.getProduct().getCreatedBy().getEmail(),
                                 feedbackEntity.getProduct().getCreatedBy().getPassword(),
-                                feedbackEntity.getProduct().getCreatedBy().getRole()
+                                UserRole.fromString(feedbackEntity.getProduct().getCreatedBy().getRole())
                         )
                 )
         );

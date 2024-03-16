@@ -44,7 +44,7 @@ class FeedbackRepositoryTest {
             "testUser",
             "test@example.com",
             "testPassword",
-                UserRole.ADMIN
+                UserRole.ADMIN.asString()
         );
 
         entityManager.persist(userEntity);
@@ -53,7 +53,7 @@ class FeedbackRepositoryTest {
                 userEntity.getUsername(),
                 userEntity.getEmail(),
                 userEntity.getPassword(),
-                userEntity.getRole()
+                UserRole.fromString(userEntity.getRole())
         );
 
         ProductEntity productEntity = new ProductEntity(

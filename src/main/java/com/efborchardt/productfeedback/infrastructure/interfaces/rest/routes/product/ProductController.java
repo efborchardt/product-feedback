@@ -14,11 +14,13 @@ import com.efborchardt.productfeedback.application.usecase.product.list.ProductR
 import com.efborchardt.productfeedback.application.usecase.product.update.UpdateProductRequestDTO;
 import com.efborchardt.productfeedback.application.usecase.product.update.UpdateProductResponseDTO;
 import com.efborchardt.productfeedback.application.usecase.product.update.UpdateProductUseCase;
+import com.efborchardt.productfeedback.infrastructure.interfaces.rest.security.AuthenticationContextUtil;
 import com.efborchardt.productfeedback.infrastructure.interfaces.rest.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -69,19 +71,19 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<UpdateProductResponseDTO> updateProduct(@RequestBody UpdateProductRequestDTO request,
-                                                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        final String senderUsername = this.tokenService.validateToken(token);
-        final UpdateProductResponseDTO response = this.updateProductUseCase.execute(request, senderUsername);
+    public ResponseEntity<UpdateProductResponseDTO> updateProduct(@RequestBody UpdateProductRequestDTO request) {
+        final UpdateProductResponseDTO response = this.updateProductUseCase.execute(
+                request,
+                AuthenticationContextUtil.getAuthenticatedUser()
+        );
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteProductResponseDTO> deleteProduct(@PathVariable UUID id,
-                                                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        final String senderUsername = this.tokenService.validateToken(token);
-        final DeleteProductRequestDTO request = new DeleteProductRequestDTO(id, senderUsername);
-        final DeleteProductResponseDTO response = this.deleteProductUseCase.execute(request);
+    public ResponseEntity<DeleteProductResponseDTO> deleteProduct(@PathVariable UUID id) {
+        final DeleteProductResponseDTO response = this.deleteProductUseCase.execute(
+                id,
+                AuthenticationContextUtil.getAuthenticatedUser());
         return ResponseEntity.ok(response);
     }
 

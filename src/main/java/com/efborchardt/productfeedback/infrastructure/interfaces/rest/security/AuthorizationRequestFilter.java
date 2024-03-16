@@ -1,6 +1,7 @@
 package com.efborchardt.productfeedback.infrastructure.interfaces.rest.security;
 
 import com.efborchardt.productfeedback.domain.user.exception.UserNotFoundException;
+import com.efborchardt.productfeedback.domain.user.repository.UserRepository;
 import com.efborchardt.productfeedback.infrastructure.persistence.user.model.SpringDataUserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,10 +20,10 @@ import java.io.IOException;
 public class AuthorizationRequestFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final SpringDataUserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AuthorizationRequestFilter(TokenService tokenService, SpringDataUserRepository userRepository) {
+    public AuthorizationRequestFilter(TokenService tokenService, UserRepository userRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
     }
