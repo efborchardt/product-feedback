@@ -15,6 +15,7 @@ The project is still under development and the next updates will focus on the fo
 - [ ] Use the Spring authentication context to authorize only the user who created the feedback to change it
 - [ ] Improve automated test coverage for API controllers
 - [ ] Create automated tests for UseCases and classes related to project security settings
+- [ ] Creation of the application's Dockerfile to facilitate deployment
 
 ## 💻 Prerequisites
 
