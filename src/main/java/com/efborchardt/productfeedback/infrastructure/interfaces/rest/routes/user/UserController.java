@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FindUserResponseDTO> findById(UUID id) {
+    public ResponseEntity<FindUserResponseDTO> findById(@PathVariable UUID id) {
         FindUserResponseDTO response = this.findUserUseCase.execute(id);
         return ResponseEntity.ok(response);
     }
