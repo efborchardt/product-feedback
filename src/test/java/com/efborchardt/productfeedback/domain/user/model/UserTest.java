@@ -2,10 +2,13 @@ package com.efborchardt.productfeedback.domain.user.model;
 
 import com.efborchardt.productfeedback.domain._shared.notification.NotificationFactory;
 import com.efborchardt.productfeedback.domain._shared.notification.NotificationInterface;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.anyString;
@@ -16,12 +19,19 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class UserTest {
 
+    private static MockedStatic<NotificationFactory> mockedStatic;
+
     @Mock
     private static NotificationInterface mockNotification;
 
     @BeforeAll
     static void beforeAll() {
-        mockStatic(NotificationFactory.class, invocationOnMock -> mockNotification);
+        mockedStatic = mockStatic(NotificationFactory.class, invocationOnMock -> mockNotification);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        mockedStatic.close();
     }
 
     @Test
