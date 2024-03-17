@@ -56,7 +56,7 @@ GRANT ALL PRIVILEGES ON DATABASE fbmanagement TO efborchardt;
 
 ### 2. Setting Up Environment Variables or Using Default Credentials
 
-Using Environment Variables to set up environment variables on your operating system:
+Set up environment variables on your operating system:
 
 #### Linux & macOS:
 
@@ -145,3 +145,17 @@ curl --request GET \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJwcm9kdWN0LWZlZWRiYWNrLWFwaSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzEwNjY1OTg0fQ.D8b8fU9IaETRYiBnHugPCG3yluEcls59qIjnDd3E6ew'
 ```
 - If you want to create more users, log in using the default admin user, the user creation endpoint is protected for admins only.
+
+## Project Highlights
+
+- Application of Clean Architecture and Domain Driven Design (DDD) concepts to separate responsibilities into layers and make project maintenance and extension easier.
+- The domain layer does not depend on Spring Data JPA entities and repositories, allowing greater flexibility to change the persistence layer without impacting the application domain.
+- Application controllers are anemic, and access the application's functionalities through use cases, which are responsible for bridging the gap between the external world and the application domain, where all rules and checks are centralized.
+- Spring Security implementation to configure and manage all API security settings. [Security Configs](https://github.com/efborchardt/product-feedback/blob/master/src/main/java/com/efborchardt/productfeedback/infrastructure/interfaces/rest/security/SecurityConfigs.java)
+- Using JWT tokens to perform stateless authorization. [Example](https://github.com/efborchardt/product-feedback/blob/master/src/main/java/com/efborchardt/productfeedback/infrastructure/interfaces/rest/security/JwtTokenService.java)
+- Using the Spring authentication context to obtain the user from the authorization token, propagating this information to the use case where it will later be used in business rule validations. [Example](https://github.com/efborchardt/product-feedback/blob/6e2f7acfb79b74ba1b72e93b8ddd27e009ed5989/src/main/java/com/efborchardt/productfeedback/infrastructure/interfaces/rest/routes/product/ProductController.java#L77)
+- Use of notification pattern to validate several business rules at once and return only one exception to the user containing all the content of the validations that were not met. [Example](https://github.com/efborchardt/product-feedback/blob/6e2f7acfb79b74ba1b72e93b8ddd27e009ed5989/src/main/java/com/efborchardt/productfeedback/domain/user/model/User.java#L73)
+- Implementation of Exception Handlers to handle errors globally in the API and avoid unhandled errors and unwanted returns. [Example](https://github.com/efborchardt/product-feedback/blob/master/src/main/java/com/efborchardt/productfeedback/infrastructure/interfaces/rest/errors/ApiExceptionHandler.java)
+- Implemented unit tests across the entire application domain using JUnit and Mockito. [Example](https://github.com/efborchardt/product-feedback/blob/master/src/test/java/com/efborchardt/productfeedback/domain/product/service/ProductServiceTest.java)
+- Implemented integration tests in the application persistence layer, using H2 in-memory database when running the application in the testing context. [Example](https://github.com/efborchardt/product-feedback/blob/master/src/test/java/com/efborchardt/productfeedback/domain/user/repository/UserRepositoryTest.java)
+- Implemented tests on the application's api endpoints using MockMVC to perform the requests. [Example](https://github.com/efborchardt/product-feedback/blob/master/src/test/java/com/efborchardt/productfeedback/infrastructure/interfaces/rest/routes/auth/AuthControllerTest.java)
