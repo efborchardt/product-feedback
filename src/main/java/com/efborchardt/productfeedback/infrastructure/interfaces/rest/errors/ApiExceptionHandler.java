@@ -6,6 +6,7 @@ import com.efborchardt.productfeedback.domain.product.exception.ProductNotFoundE
 import com.efborchardt.productfeedback.domain.user.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -60,4 +61,11 @@ public class ApiExceptionHandler {
         ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), "Unauthorized");
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
+        ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), "Unauthorized");
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+    }
+
 }
