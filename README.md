@@ -36,23 +36,31 @@ To install product-feedback, follow these steps:
 ### 1. Creating a New Database in PostgreSQL
 - **Open the PostgreSQL terminal:** This can be done through **psql**, an interactive terminal for PostgreSQL, allowing interaction with the database server. Access it by executing psql in your terminal or command prompt.
 - **Log in as a superuser:** Typically, when PostgreSQL is installed, a default user named postgres is created. To log in, you might use the following command:
-```
+
+```sh
 psql -U postgres
 ```
 You will be prompted to enter the password set during the PostgreSQL installation.
 
 - **Create the new database:** Use the following SQL command to create a new database. Replace fbmanagement with your desired database name if you want a different name.
-```
+- 
+
+```sql
 CREATE DATABASE fbmanagement;
 ```
+
 - **Create the database user:** Create a user who will have access to this database. Replace efborchardt with your desired username and efb123 with your desired password.
-```
+
+```sql
 CREATE USER efborchardt WITH ENCRYPTED PASSWORD 'efb123';
 ```
+
 - **Grant privileges to the user:** Grant all privileges of the created database to the user.
-```
+
+```sql
 GRANT ALL PRIVILEGES ON DATABASE fbmanagement TO efborchardt;
 ```
+
 - **Exit psql:** You can exit the PostgreSQL terminal by typing `\q`.
 
 ### 2. Setting Up Environment Variables or Using Default Credentials
@@ -61,17 +69,18 @@ Set up environment variables on your operating system:
 
 #### Linux & macOS:
 
-- Open your `~/.bashrc`, `~/.zshrc`, or the configuration file of your preferred shell.
+- Open your `~/.shrc`, `~/.zshrc`, or the configuration file of your preferred shell.
 - Add the following lines at the end of the file (replace the values as necessary):
 
-```
+```sh
 export DB_HOST=localhost
 export DB_PORT=5432
 export DB_NAME=fbmanagement
 export DB_USERNAME=efborchardt
 export DB_PASSWORD=efb123
 ```
-- Save the file and reload your shell's configuration. For **.bashrc**, you can use `source ~/.bashrc`.
+
+- Save the file and reload your shell's configuration. For **.shrc**, you can use `source ~/.shrc`.
 
 #### Windows:
 
@@ -88,26 +97,34 @@ export DB_PASSWORD=efb123
 - To get the project, run the following command in the terminal:
 
 HTTPS
-```bash
+
+```sh
 git clone https://github.com/efborchardt/product-feedback.git
 ```
+
 SSH
-```bash
+```sh
 git clone git@github.com:efborchardt/product-feedback.git
 ```
+
 ### 4. Running the Project
 - Access the project folder in terminal/cmd:
-```
+
+```sh
 cd project-path/product-feedback
 ```
+
 - Use Gradle Wrapper to run the project:
 
 Linux & macOS
-```
+
+```sh
 ./gradlew bootRun
 ```
+
 Windows
-```
+
+```sh
 .\gradlew.bat bootRun
 ```
 Or run the project through your IDE.
@@ -120,11 +137,12 @@ To use product-feedback, follow these steps:
 
 - Check the API documentation by going to:
 
-```
+```sh
 http://localhost:50001/api/documentation
 ```
 
 - When starting the project for the first time, two standard users will be available, created through Flyway migration.
+
 ```
 1.  username: admin
     password: admin
@@ -136,15 +154,19 @@ http://localhost:50001/api/documentation
 ```
 
 - The API uses stateless authorization through JWT Tokens. You can obtain a token by authenticating through the endpoint:
-```
+
+```sh
 http://localhost:50001/api/public/auth/login
 ```
+
 - All other endpoints are authenticated and the Header **Authorization** must be entered as **Bearer Token**. Example:
-```
+
+```sh
 curl --request GET \
   --url http://localhost:50001/api/products \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJwcm9kdWN0LWZlZWRiYWNrLWFwaSIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzEwNjY1OTg0fQ.D8b8fU9IaETRYiBnHugPCG3yluEcls59qIjnDd3E6ew'
 ```
+
 - If you want to create more users, log in using the default admin user, the user creation endpoint is protected for admins only.
 
 ## Project Highlights
